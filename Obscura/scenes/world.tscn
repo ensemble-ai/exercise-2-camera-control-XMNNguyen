@@ -73,7 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0
 script = ExtResource("6_m817a")
 top_left = Vector2(-3, -3)
 bottom_right = Vector2(3, 3)
-autoscroll_speed = Vector3(0, 0, 0)
+autoscroll_speed = Vector3(0.1, 0, 0)
 target = NodePath("../Vessel")
 
 [node name="debug" type="Label" parent="FrameBoundAutoscrollCamera"]
