@@ -18,8 +18,8 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	var tpos = target.global_position
-	var cpos = global_position
+	var tpos:Vector3 = target.global_position
+	var cpos:Vector3 = global_position
 	
 	#boundary checks
 	#left
