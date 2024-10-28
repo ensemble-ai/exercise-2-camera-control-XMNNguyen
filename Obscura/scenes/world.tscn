@@ -104,8 +104,8 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0
 script = ExtResource("8_g0pwr")
 lead_speed = 0.2
 catchup_speed = 0.05
-catchup_delay_duration = 1.0
-leash_distance = 2.0
+catchup_delay_duration = 0.2
+leash_distance = 7.0
 target = NodePath("../../Vessel")
 
 [node name="debug" type="Label" parent="CameraSelector/TargetFocusPositionLockLerpCamera"]
@@ -119,7 +119,7 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 30, 0
 script = ExtResource("9_q2idh")
 push_ratio = 0.25
 pushbox_top_left = Vector2(-9, -9)
-pushbox_bottom_right = Vector2(9, 12)
+pushbox_bottom_right = Vector2(9, 9)
 speedup_zone_top_left = Vector2(-3, -3)
 speedup_zone_bottom_right = Vector2(3, 3)
 target = NodePath("../../Vessel")
