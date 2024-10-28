@@ -1,6 +1,9 @@
 class_name PositionLockLerp
 extends CameraControllerBase
 
+@export var follow_speed:float
+@export var catchup_speed:float
+@export var leash_distance:float
 
 func _ready() -> void:
 	super()
@@ -14,9 +17,24 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
-	# set the position of the camera to be on the player position
-	position = target.global_position 	
-		
+	# get the distance between the camera and player on the x-z plane
+	var xz_camera_position:Vector2 = Vector2(global_position.x, global_position.z)
+	var xz_target_position:Vector2 = Vector2(target.global_position.x, target.global_position.z)
+	
+	var distance_to_target:float = xz_camera_position.distance_to(xz_target_position)
+	
+	var direction:Vector3 = (Vector3(global_position.x, 0, global_position.z) -
+								Vector3(target.global_position.x, 0, target.global_position.z)
+								).normalized()
+	
+	var camera_destination:Vector3 = target.global_position + (direction * leash_distance)
+	
+	if distance_to_target > leash_distance:
+		if target.velocity == Vector3(0, 0, 0):
+			global_position = lerp(global_position, camera_destination, catchup_speed)
+		else:
+			global_position = lerp(global_position, camera_destination, follow_speed)
+			
 	super(delta)
 
 

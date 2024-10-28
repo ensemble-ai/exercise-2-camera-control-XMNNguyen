@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 		draw_logic()
 	
 	# set the position of the camera to be on the player position
-	position = target.global_position
+	global_position = target.global_position 
 		
 	super(delta)
 
