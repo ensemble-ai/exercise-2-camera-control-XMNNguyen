@@ -39,44 +39,52 @@ func _process(delta: float) -> void:
 	# boundary checks for pushbox
 	# left
 	var diff_between_left_edges_boundery = (tpos.x - target.WIDTH / 2.0) - (cpos.x - pushbox_width / 2.0)
+	
 	if diff_between_left_edges_boundery < 0:
 		global_position.x += diff_between_left_edges_boundery
 		
 	# right
 	var diff_between_right_edges_boundery = (tpos.x + target.WIDTH / 2.0) - (cpos.x + pushbox_width / 2.0)
+	
 	if diff_between_right_edges_boundery > 0:
 		global_position.x += diff_between_right_edges_boundery
 		
 	# top
 	var diff_between_top_edges_boundery = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - pushbox_height / 2.0)
+	
 	if diff_between_top_edges_boundery < 0:
 		global_position.z += diff_between_top_edges_boundery
 		
 	# bottom
 	var diff_between_bottom_edges_boundery = (tpos.z + target.HEIGHT / 2.0) - (cpos.z + pushbox_height / 2.0)
+	
 	if diff_between_bottom_edges_boundery > 0:
 		global_position.z += diff_between_bottom_edges_boundery
 	
 	# boundary checks for speedup zone
 	# left
 	var diff_between_left_edges_speedup_zone = (tpos.x - target.WIDTH / 2.0) - (cpos.x - speedup_zone_width / 2.0)
-	if diff_between_left_edges_speedup_zone < 0:
-		global_position += target.velocity.normalized() * push_ratio
+	
+	if diff_between_left_edges_speedup_zone < 0 && target.velocity.normalized().x < 0:
+		global_position.x += target.velocity.normalized().x * push_ratio
 		
 	# right
 	var diff_between_right_edges_speedup_zone = (tpos.x + target.WIDTH / 2.0) - (cpos.x + speedup_zone_width / 2.0)
-	if diff_between_right_edges_speedup_zone > 0:
-		global_position += target.velocity.normalized() * push_ratio
+	
+	if diff_between_right_edges_speedup_zone > 0 && target.velocity.normalized().x > 0:
+		global_position.x += target.velocity.normalized().x * push_ratio
 		
 	# top
 	var diff_between_top_edges_speedup_zone = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - speedup_zone_height / 2.0)
-	if diff_between_top_edges_speedup_zone < 0:
-		global_position += target.velocity.normalized() * push_ratio
+	
+	if diff_between_top_edges_speedup_zone < 0  && target.velocity.normalized().z < 0:
+		global_position.z += target.velocity.normalized().z * push_ratio
 		
 	# bottom
 	var diff_between_bottom_edges_speedup_zone = (tpos.z + target.HEIGHT / 2.0) - (cpos.z + speedup_zone_height / 2.0)
-	if diff_between_bottom_edges_speedup_zone > 0:
-		global_position += target.velocity.normalized() * push_ratio
+	
+	if diff_between_bottom_edges_speedup_zone > 0 && target.velocity.normalized().z > 0:
+		global_position.z += target.velocity.normalized().z * push_ratio
 		
 	super(delta)
 
