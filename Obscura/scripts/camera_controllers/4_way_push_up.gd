@@ -35,8 +35,8 @@ func _process(delta: float) -> void:
 	var tpos:Vector3 = target.global_position
 	var cpos:Vector3 = global_position
 	
-	#TODO: set up boundery checks for speedup and pushbox zones
 	# boundary checks for pushbox
+	# if our player is touching any of the pushbox bounderies, move camera at speed of player
 	# left
 	var diff_between_left_edges_boundery = (tpos.x - target.WIDTH / 2.0) - (cpos.x - pushbox_width / 2.0)
 	
@@ -62,6 +62,8 @@ func _process(delta: float) -> void:
 		global_position.z += diff_between_bottom_edges_boundery
 	
 	# boundary checks for speedup zone
+	# when player is in speedup zone, if they move in same direction as the section of the speedup zone,
+	# then speedup the camera in the input direction based on push_ratio
 	# left
 	var diff_between_left_edges_speedup_zone = (tpos.x - target.WIDTH / 2.0) - (cpos.x - speedup_zone_width / 2.0)
 	
@@ -101,8 +103,6 @@ func draw_logic() -> void:
 	var right:float = pushbox_width / 2
 	var top:float = -pushbox_height / 2
 	var bottom:float = pushbox_height / 2
-	
-	#TODO: set up imediate meshes for pushbox and speedup zones
 	
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
 	immediate_mesh.surface_add_vertex(Vector3(right, 0, top))

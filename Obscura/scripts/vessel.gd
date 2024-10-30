@@ -19,7 +19,7 @@ func _physics_process(_delta):
 		_play($Audio/HyperSpeed)
 		speed = HYPER_SPEED
 		$ParticleTrail.visible = true
-
+	
 	if Input.is_action_just_pressed("raise_terrain"):
 		_play($Audio/Terraforming)
 		terrain_manager.move_vertex_below_position(global_position, terrforming_power)

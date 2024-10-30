@@ -13,6 +13,7 @@ func _ready() -> void:
 	super()
 	global_position = target.global_position 
 	
+	# get our box width and height from the corner coordinates
 	box_width = abs(bottom_right - top_left).x
 	box_height = abs(bottom_right - top_left).y 
 	
@@ -29,26 +30,27 @@ func _process(delta: float) -> void:
 	var tpos:Vector3 = target.global_position
 	var cpos:Vector3 = global_position
 	
-	#boundary checks
-	#left
+	# boundary checks
+	# if the player tries to go outside of the boundery box, move them back in
+	# left
 	var diff_between_left_edges = (tpos.x - target.WIDTH / 2.0) - (cpos.x - box_width / 2.0)
 	
 	if diff_between_left_edges < 0:
 		target.global_position.x -= diff_between_left_edges
 		
-	#right
+	# right
 	var diff_between_right_edges = (tpos.x + target.WIDTH / 2.0) - (cpos.x + box_width / 2.0)
 	
 	if diff_between_right_edges > 0:
 		target.global_position.x -= diff_between_right_edges
 		
-	#top
+	# top
 	var diff_between_top_edges = (tpos.z - target.HEIGHT / 2.0) - (cpos.z - box_height / 2.0)
 	
 	if diff_between_top_edges < 0:
 		target.global_position.z -= diff_between_top_edges
 		
-	#bottom
+	# bottom
 	var diff_between_bottom_edges = (tpos.z + target.HEIGHT / 2.0) - (cpos.z + box_height / 2.0)
 	
 	if diff_between_bottom_edges > 0:

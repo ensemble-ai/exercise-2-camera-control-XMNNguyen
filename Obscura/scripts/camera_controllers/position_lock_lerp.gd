@@ -20,21 +20,28 @@ func _process(delta: float) -> void:
 	# get the distance between the camera and player on the x-z plane
 	var xz_camera_position:Vector2 = Vector2(global_position.x, global_position.z)
 	var xz_target_position:Vector2 = Vector2(target.global_position.x, target.global_position.z)
-	
 	var distance_to_target:float = xz_camera_position.distance_to(xz_target_position)
 	
+	# get the normalized direction of the player to the target
 	var direction:Vector3 = (Vector3(global_position.x, 0, global_position.z) -
 								Vector3(target.global_position.x, 0, target.global_position.z)
 								).normalized()
 	
+	# set the camera destination to be the leash_distance away from the player
 	var camera_destination:Vector3 = target.global_position + (direction * leash_distance)
 	
 	if distance_to_target > leash_distance:
+		# if our player isn't moving, use catchup_speed as the lerp speed
+		# if our player is moving, use follow_speed as the lerp speed
 		if target.velocity == Vector3(0, 0, 0):
 			global_position = lerp(global_position, camera_destination, catchup_speed)
 		else:
-			global_position = lerp(global_position, camera_destination, follow_speed)
-			
+			# if speedboost is activated, speed up the camera movement accordingly
+			if Input.is_action_pressed("ui_accept"):
+				global_position = lerp(global_position, camera_destination, follow_speed * 6)
+			else:
+				global_position = lerp(global_position, camera_destination, follow_speed)
+	
 	super(delta)
 
 

@@ -28,19 +28,24 @@ func _process(delta: float) -> void:
 	
 	# stores where we want the camera to be
 	var camera_destination:Vector3
-
+	
+	# if we are idle, start idle timer and when catchup delay duration is met, set the camera position to be the target's position
+	# else while moving, reset the idle timer then calculate where the camera should be based on leash distance and input direction
 	if target.velocity == Vector3(0, 0, 0):
-		# if we are idle, start idle timer and when catchup delay duration is met, set the camera position to be the target's position
 		idle_time += delta
 		camera_destination = target.global_position
 		
 		if idle_time >= catchup_delay_duration:
 			global_position = lerp(global_position, camera_destination, catchup_speed) 
 	else:
-		# while moving, reset the idle timer then calculate where the camera should be based on leash distance and input direction
 		idle_time = 0
 		camera_destination = target.global_position + (Vector3(target.velocity.x, 0, target.velocity.z).normalized() * leash_distance)
-		global_position = lerp(global_position, camera_destination, lead_speed)
+		
+		# if speedboost is activated, speed up the camera movement accordingly
+		if Input.is_action_pressed("ui_accept"):
+			global_position = lerp(global_position, camera_destination, lead_speed * 6)
+		else:
+			global_position = lerp(global_position, camera_destination, lead_speed)
 	
 	super(delta)
 

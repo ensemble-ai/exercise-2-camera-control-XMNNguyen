@@ -25,6 +25,7 @@ func _process(_delta):
 				if index == current_controller:
 					cameras[current_controller].make_current()
 					cameras[current_controller].global_position = %Vessel.global_position
+					cameras[current_controller].dist_above_target = cameras[current_controller - 1].dist_above_target
 
 				else:
 					cameras[index].current = false
