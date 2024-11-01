@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 	
 	if distance_to_target > leash_distance:
 		# if our player isn't moving, use catchup_speed as the lerp speed
-		# if our player is moving, use follow_speed as the lerp speed
+		# else, our player is moving, use follow_speed as the lerp speed
 		if target.velocity == Vector3(0, 0, 0):
 			global_position = lerp(global_position, camera_destination, catchup_speed)
 		else:

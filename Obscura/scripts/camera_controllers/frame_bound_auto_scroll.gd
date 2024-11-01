@@ -25,6 +25,7 @@ func _process(delta: float) -> void:
 	if draw_camera_logic:
 		draw_logic()
 	
+	# constantly update our position based on our autoscroll speed + direction
 	global_position += autoscroll_speed
 	
 	var tpos:Vector3 = target.global_position

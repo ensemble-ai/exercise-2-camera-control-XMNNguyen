@@ -18,9 +18,11 @@ func _ready() -> void:
 	super()
 	position = target.position
 	
+	# calculate pushbox width and height
 	pushbox_width = abs(pushbox_bottom_right - pushbox_top_left).x
 	pushbox_height = abs(pushbox_bottom_right - pushbox_top_left).y
 	
+	# calculate speedup zone width and height
 	speedup_zone_width = abs(speedup_zone_bottom_right - speedup_zone_top_left).x
 	speedup_zone_height = abs(speedup_zone_bottom_right - speedup_zone_top_left).y
 
@@ -99,23 +101,45 @@ func draw_logic() -> void:
 	mesh_instance.mesh = immediate_mesh
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	
-	var left:float = -pushbox_width / 2
-	var right:float = pushbox_width / 2
-	var top:float = -pushbox_height / 2
-	var bottom:float = pushbox_height / 2
+	var pushbox_left:float = -pushbox_width / 2
+	var pushbox_right:float = pushbox_width / 2
+	var pushbox_top:float = -pushbox_height / 2
+	var pushbox_bottom:float = pushbox_height / 2
+	
+	var speedup_zone_left:float = -speedup_zone_width / 2
+	var speedup_zone_right:float = speedup_zone_width / 2
+	var speedup_zone_top:float = -speedup_zone_height / 2
+	var speedup_zone_bottom:float = speedup_zone_height / 2 
 	
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
-	immediate_mesh.surface_add_vertex(Vector3(right, 0, top))
-	immediate_mesh.surface_add_vertex(Vector3(right, 0, bottom))
 	
-	immediate_mesh.surface_add_vertex(Vector3(right, 0, bottom))
-	immediate_mesh.surface_add_vertex(Vector3(left, 0, bottom))
+	# pushbox vertices
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_right, 0, pushbox_top))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_right, 0, pushbox_bottom))
 	
-	immediate_mesh.surface_add_vertex(Vector3(left, 0, bottom))
-	immediate_mesh.surface_add_vertex(Vector3(left, 0, top))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_right, 0, pushbox_bottom))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_left, 0, pushbox_bottom))
 	
-	immediate_mesh.surface_add_vertex(Vector3(left, 0, top))
-	immediate_mesh.surface_add_vertex(Vector3(right, 0, top))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_left, 0, pushbox_bottom))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_left, 0, pushbox_top))
+	
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_left, 0, pushbox_top))
+	immediate_mesh.surface_add_vertex(Vector3(pushbox_right, 0, pushbox_top))
+	
+	# FOR DEBUGGING
+	# speedup zone vertices
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_right, 0, speedup_zone_top))
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_right, 0, speedup_zone_bottom))
+	#
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_right, 0, speedup_zone_bottom))
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_left, 0, speedup_zone_bottom))
+	#
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_left, 0, speedup_zone_bottom))
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_left, 0, speedup_zone_top))
+	#
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_left, 0, speedup_zone_top))
+	#immediate_mesh.surface_add_vertex(Vector3(speedup_zone_right, 0, speedup_zone_top))
+	
 	immediate_mesh.surface_end()
 
 	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
